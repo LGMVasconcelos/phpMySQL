@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Cadastro de Alunos</title>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <form action="salvar.php" method="post">
+                <h1 class="form-title">Novo Aluno</h1>
+                <div>
+                    <div class="input-container">
+                        <label for="">Nome:</label>
+                        <br>
+                        <input type="text" name="nome" id="nome" required placeholder="Digite o nome">
+                    </div>
+                    <div class="input-container">
+                        <label for="">E-mail:</label>
+                        <br>
+                        <input type="email" name="email" id="email" required placeholder="Digite o e-mail">
+                    </div>
+                    <button type="submit">Cadastrar Aluno</button>
+                </div>
+                <div id="resultado_media">
+                    <select name="materia" id="materia">
+                        <option value="Matemática">Matemática</option>
+                        <option value="Português">Português</option>
+                        <option value="Ciências">Ciências</option>
+                        <option value="História">História</option>
+                        <option value="Geografia">Geografia</option>
+                    </select>
+                    </select>
+                    <div class="input-container" >
+                        <label for="">Nota 1:</label>
+                        <br>
+                        <input type="number" step="0.01" name="nota1" id="nota1" required placeholder="Digite a nota 1">
+                    </div>
+                    <div class="input-container">
+                        <label for="">Nota 2:</label>
+                        <br>
+                        <input type="number" step="0.01" name="nota2" id="nota2" required placeholder="Digite a nota 2">
+                    </div>
+                    <div class="input-container">
+                        <label for="">Nota 3:</label>
+                        <br>
+                        <input type="number" step="0.01" name="nota3" id="nota3" required placeholder="Digite a nota 3">
+                    </div>
+                    <button type="submit">Calcular Média</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
