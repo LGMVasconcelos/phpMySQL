@@ -30,7 +30,7 @@ include_once("conexao.php");
                 echo "</tr>";
             }
             ?>
-            <a href="index.html" class="btn-voltar"><-- 
+            <a href="cadastroDeAlunos.html" class="btn-voltar"><-- 
             Cadastrar Novo Aluno</a>
         </table>
     </div>

@@ -21,3 +21,23 @@ create table notas (
 ALTER TABLE notas MODIFY COLUMN nota DECIMAL(2,1) not null;
 ALTER TABLE notas MODIFY COLUMN materia varchar(100) not null;
 ALTER TABLE notas MODIFY COLUMN aluno_id int not null;
+
+create table usuario (
+	id int auto_increment primary key,
+    nome varchar(100) not null,
+    email varchar(100) not null,
+    senha varchar(100),
+    senha_criptografada varbinary(255) not null
+);
+
+ALTER TABLE usuario MODIFY COLUMN senha VARCHAR(100) NULL;
+
+set @chave_secreta = 'SenhaUltraForte!123@;.,';
+
+create table remember_tokens (
+    id int auto_increment primary key,
+    user_id int not null,
+    token varchar(255) not null,
+    expires datetime not null,
+    foreign key (user_id) references usuario(id) on delete cascade
+);
