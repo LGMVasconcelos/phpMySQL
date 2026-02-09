@@ -1,0 +1,71 @@
+CREATE DATABASE db_industria_automotiva;
+USE db_industria_automotiva;
+
+-- Tabela para Autenticação e Gestão de Permissões
+CREATE TABLE tb_usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nome_usuario VARCHAR(100) NOT NULL,
+    login VARCHAR(50) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL, -- No PHP, use password_hash
+    nivel_acesso ENUM('admin', 'operador', 'gerente') DEFAULT 'operador'
+);
+
+-- Tabela de Ativos da Fábrica
+CREATE TABLE tb_maquinas (
+    id_maquina INT AUTO_INCREMENT PRIMARY KEY,
+    tag_maquina VARCHAR(20) UNIQUE NOT NULL, -- Ex: CNC-01, ROB-05
+    tipo_maquina VARCHAR(50),
+    status_operacional ENUM('ativo', 'manutencao', 'parado') DEFAULT 'ativo'
+);
+
+-- Tabela de Registro de Produção (Relacionamento N:1 com máquinas)
+CREATE TABLE tb_producao (
+    id_registro INT AUTO_INCREMENT PRIMARY KEY,
+    id_maquina INT,
+    qtd_produzida INT NOT NULL,
+    data_producao DATE NOT NULL,
+    turno ENUM('A', 'B', 'C'),
+    FOREIGN KEY (id_maquina) REFERENCES tb_maquinas(id_maquina)
+);
+
+População de Dados (DML)
+
+INSERT INTO tb_usuarios (nome_usuario, login, senha, nivel_acesso) VALUES
+('Carlos Augusto', 'carlos.admin', 'admin123', 'admin'),
+('Ana Paula', 'ana.gerente', 'gerente456', 'gerente'),
+('Bruno Lima', 'bruno.op', 'op789', 'operador'),
+('Daniela Silva', 'daniela.op', 'op789', 'operador');
+-- (Adicionei 4 aqui, os próximos 16 registros focam nas tabelas de dados de negócio abaixo)
+
+INSERT INTO tb_maquinas (tag_maquina, tipo_maquina, status_operacional) VALUES
+('CNC-01', 'Torno CNC', 'ativo'), ('CNC-02', 'Torno CNC', 'ativo'),
+('CNC-03', 'Torno CNC', 'manutencao'), ('ROB-01', 'Braço Robótico', 'ativo'),
+('ROB-02', 'Braço Robótico', 'parado'), ('ROB-03', 'Braço Robótico', 'ativo'),
+('PRE-01', 'Prensa Hidráulica', 'ativo'), ('PRE-02', 'Prensa Hidráulica', 'ativo'),
+('COR-01', 'Corte a Laser', 'ativo'), ('COR-02', 'Corte a Laser', 'manutencao'),
+('EXT-01', 'Extrusora', 'ativo'), ('EXT-02', 'Extrusora', 'ativo'),
+('SOL-01', 'Solda Robotizada', 'ativo'), ('SOL-02', 'Solda Robotizada', 'ativo'),
+('MON-01', 'Linha de Montagem', 'ativo'), ('MON-02', 'Linha de Montagem', 'ativo'),
+('PNT-01', 'Célula de Pintura', 'parado'), ('PNT-02', 'Célula de Pintura', 'ativo'),
+('EMB-01', 'Embaladora', 'ativo'), ('EMB-02', 'Embaladora', 'ativo');
+
+INSERT INTO tb_producao (id_maquina, qtd_produzida, data_producao, turno) VALUES
+(1, 150, '2024-05-01', 'A'), (1, 140, '2024-05-01', 'B'),
+(2, 200, '2024-05-01', 'A'), (4, 450, '2024-05-01', 'C'),
+(6, 420, '2024-05-01', 'A'), (7, 95, '2024-05-02', 'B'),
+(8, 110, '2024-05-02', 'A'), (9, 300, '2024-05-02', 'C'),
+(11, 500, '2024-05-02', 'B'), (12, 480, '2024-05-02', 'A'),
+(13, 210, '2024-05-03', 'C'), (14, 190, '2024-05-03', 'A'),
+(15, 600, '2024-05-03', 'B'), (16, 580, '2024-05-03', 'C'),
+(18, 320, '2024-05-03', 'A'), (19, 1000, '2024-05-04', 'B'),
+(20, 950, '2024-05-04', 'C'), (1, 160, '2024-05-04', 'A'),
+(4, 470, '2024-05-04', 'B'), (9, 310, '2024-05-04', 'A');
+
+SELECT m.tag_maquina, m.tipo_maquina, p.qtd_produzida, p.data_producao
+FROM tb_maquinas m
+JOIN tb_producao p ON m.id_maquina = p.id_maquina
+ORDER BY p.data_producao DESC;
+
+SELECT COUNT(DISTINCT tipo_maquina) AS Total_Tipos_Maquinas FROM tb_maquinas;
+
+SELECT ROUND(AVG(qtd_produzida), 2) AS Media_Producao_Lote FROM tb_producao;
