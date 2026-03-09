@@ -35,7 +35,7 @@ if ($res_total) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="stylelist.css">
-    <title>Lista de Alunos</title>
+    <title>Informações das máquinas</title>
 </head>
 <body>
     <div class="container">
@@ -43,14 +43,32 @@ if ($res_total) {
             <ul>
                 <li>Usuário: <?php echo $_SESSION['nome_usuario'] ?? ''; ?></li>
                 <li>Nível de Acesso: <?php echo $_SESSION['nivel_acesso'] ?? 'Desconhecido'; ?></li>
-                <li><a href="logout.php">Sair</a></li>
+                <li><a href="logout.php" class="btn-voltar">Sair</a></li>
             </ul>
+            <hr/>
+        </nav>
+        <nav>
+            <?php include_once('menu.php'); ?>
         </nav>
         <h2>Máquinas Cadastradas</h2>
         <p><strong>Máquinas Ativas:</strong> <?php echo $ativo; ?> &nbsp; | &nbsp; <strong>Total Produzido:</strong> <?php echo $total_produzido; ?> &nbsp; | &nbsp; <strong>Total de Tipos de Máquinas:</strong> <?php echo $total_tipos; ?></p>
-            <a href="relatorio.php" class="btn-voltar">Visualizar relatório de Produção</a>
-            &nbsp; | &nbsp;
-            <a href="relatorio2.php" class="btn-voltar">Visualizar relatório de Operação</a>
+            <?php 
+            if ($_SESSION['nivel_acesso'] === 'admin' || $_SESSION['nivel_acesso'] === 'gerente') {
+                echo "<a href='cadastro.php' class='btn-voltar'>Cadastrar usuário</a>";
+                echo "&nbsp; | &nbsp;";
+                echo "<a href='cadastro_maquina.php' class='btn-voltar'>Cadastrar máquina</a>";
+                echo "&nbsp; | &nbsp;";
+                echo "<a href='cadastro_producao.php' class='btn-voltar'>Cadastrar produção</a>";
+            }
+            ?>
+            <hr/>
+            <nav>
+                <?php include_once('grafico_maquinas.php'); ?>
+            </nav>
+            <hr/>
+            <nav>
+                <?php include_once('grafico_producao.php'); ?>
+            </nav>
     </div>
 </body>
 </html>
