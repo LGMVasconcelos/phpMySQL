@@ -13,8 +13,12 @@ if ($stmt->rowCount() > 0) {
     $insert_stmt = $pdo->prepare("INSERT INTO tb_maquinas (tag_maquina, tipo_maquina, status_operacional) VALUES (?, ?, ?)");
     if ($insert_stmt->execute([$maquina, $tipo, $status])) {
         echo "<p class='sucesso'>Máquina cadastrada com sucesso!</p>";
+        header("Location: lista.php");
+        exit();
     } else {
         echo "<p class='alerta'>Erro ao cadastrar a máquina. Tente novamente.</p>";
+        header("Location: lista.php");
+        exit();
     }
 }
 ?>

@@ -10,8 +10,12 @@
     else if ($_SESSION['nivel_acesso'] === 'operador') {
         echo "<a href='relatorio.php' style='color: #00758f; text-decoration: none;'>Relatório de Produção</a>";
     }
+    else if ($_SESSION['nivel_acesso'] === 'admin') {
         echo "&nbsp; | &nbsp;";
         echo "<a href='#' style='color: #00758f; text-decoration: none;'>#</a>";
         echo "&nbsp; | &nbsp;";
         echo "<a href='#' style='color: #00758f; text-decoration: none;'>#</a>";
+    }
+    echo "&nbsp; | &nbsp;";
+    echo "<a href='fabricantes_e_veiculos.php' style='color: #00758f; text-decoration: none;'>Página de fabricantes e Veículos</a>";
 ?>
