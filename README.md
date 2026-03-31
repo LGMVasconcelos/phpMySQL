@@ -1,4 +1,4 @@
-# PHP + MySQL Web System
+# Sistema web PHP + MySQL
 
 Sistema web desenvolvido utilizando PHP e MySQL para manipulação e visualização de dados em banco de dados remoto.
 
